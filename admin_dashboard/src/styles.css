@@ -1,0 +1,88 @@
+/* styles.css for Admin Dashboard */
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif; /* يجب استبداله بخط عربي احترافي مثل Cairo أو Tajawal */
+  background-color: #f4f7f9;
+  color: #333;
+  direction: rtl; /* دعم اللغة العربية */
+}
+
+/* Container and Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Card Component */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Login Page Styles */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #1e3a8a; /* Indigo Dark */
+}
+
+.login-box {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-box h2 {
+  color: #1e3a8a;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  text-align: right; /* محاذاة النص لليمين */
+}
+
+.login-box button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3b82f6; /* Blue */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.login-box button:hover {
+  background-color: #1d4ed8; /* Darker Blue */
+}
