@@ -1,0 +1,43 @@
+name: Build Flutter APK & Web
+
+on:
+  push:
+    branches:
+      - final-delivery
+
+jobs:
+  build-flutter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: teacher_app
+
+      - name: Build APK
+        run: flutter build apk --release
+        working-directory: teacher_app
+
+      - name: Build Web
+        run: flutter build web --release
+        working-directory: teacher_app
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: teacher-app-apk
+          path: teacher_app/build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Upload Web artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: teacher-web
+          path: teacher_app/build/web
