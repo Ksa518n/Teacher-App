@@ -1,54 +1,34 @@
-name: Build React‑Native Android APK
+name: Build Flutter APK
 
 on:
   push:
-    branches: [ final‑delivery ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          node-version: 18
+          flutter-version: '3.22.0' # أو أحدث إصدار تبيه
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 11
-
-      - name: Install Android SDK tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y openjdk-11-jdk zip unzip
-          mkdir -p $HOME/android-sdk
-          curl -sSf https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -o cmdline-tools.zip
-          unzip -q cmdline-tools.zip -d $HOME/android-sdk
-          yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=$HOME/android-sdk "platform-tools" "platforms;android-31" "build-tools;31.0.0"
-
-      - name: Set ANDROID_SDK_ROOT
-        run: |
-          echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
-          echo "$HOME/android-sdk/platform-tools" >> $GITHUB_PATH
+      - name: Get dependencies
+        working-directory: teacher_app
+        run: flutter pub get
 
       - name: Build release APK
-        working-directory: android
-        run: ./gradlew assembleRelease --no-daemon
+        working-directory: teacher_app
+        run: flutter build apk --release
 
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
-          path: android/app/build/outputs/apk/release/app-release.apk
+          name: teacher_app-release-apk
+          path: teacher_app/build/app/outputs/flutter-apk/app-release.apk
